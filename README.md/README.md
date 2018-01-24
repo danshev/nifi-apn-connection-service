@@ -3,7 +3,7 @@ Apache NiFi controller service that supports sending push notifications to Apple
 
 ## Installation ##
 
- 1. [Download complied NAR](https://github.com/danshev/nifi-apn-connection-service/blob/master/nifi-apn-connection-service-nar-1.0-SNAPSHOT.nar) and [that of the supporting controller service](https://github.com/danshev/nifi-apn-connection-service) into NiFi's `/lib/` directory.
+ 1. [Download the complied NAR](https://github.com/danshev/nifi-apn-connection-service/blob/master/nifi-apn-connection-service-nar-1.0-SNAPSHOT.nar) and [that of the accompany SendPushNotification processor](https://github.com/danshev/nifi-Send-Push-Notification/blob/master/nifi-sendpushnotification-nar-1.0-SNAPSHOT.nar) into NiFi's `/lib/` directory.
  2. Change permissions of both files (`chmod 755 nifi-apn-connection-service-nar-1.0-SNAPSHOT.nar`)
  3. Restart NiFi (`/bin/nifi.sh restart`)
 
