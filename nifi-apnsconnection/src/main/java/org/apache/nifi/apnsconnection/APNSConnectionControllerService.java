@@ -86,6 +86,8 @@ public class APNSConnectionControllerService extends AbstractControllerService i
     private static String cert_file = "";
     private static String cert_password = "";
     private static String hostname = "";
+    
+    private static ApnsClient apnsClient = null;
 
     private static final List<PropertyDescriptor> properties;
 
@@ -128,7 +130,7 @@ public class APNSConnectionControllerService extends AbstractControllerService i
                 hostname = "api.development.push.apple.com";
         }
         
-        ApnsClient apnsClient = getConnection(); // Try the connection.
+        apnsClient = getConnection(); // Try the connection.
         if (apnsClient == null) {
         	log.error("Error: Couldn't connect to APNs.");
         }
@@ -142,7 +144,7 @@ public class APNSConnectionControllerService extends AbstractControllerService i
 	@Override
 	public ApnsClient getConnection() throws ProcessException {
         try {
-            final ApnsClient apnsClient = new ApnsClientBuilder()
+            apnsClient = new ApnsClientBuilder()
                     .setClientCredentials(new File(cert_file), cert_password)
                     .setApnsServer(hostname, 443)
                     .build();
