@@ -53,15 +53,6 @@ public class APNSConnectionControllerService extends AbstractControllerService i
             .required(true)
             .build();
 
-    public static final PropertyDescriptor APNS_NAME = new PropertyDescriptor
-            .Builder().name("APNS_NAME")
-            .displayName("Apple Identifier")
-            .expressionLanguageSupported(false)
-            .description("The unique identifier registered with Apple, typically in reverse DNS format (ex: com.example.app)")
-            .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
-            .required(true)
-            .build();
-
     public static final PropertyDescriptor CERT_FILE = new PropertyDescriptor
             .Builder().name("CERT_FILE")
             .displayName("Certificate File")
@@ -94,7 +85,6 @@ public class APNSConnectionControllerService extends AbstractControllerService i
     static {
         final List<PropertyDescriptor> props = new ArrayList<>();
         props.add(APNS_SERVER);
-        props.add(APNS_NAME);
         props.add(CERT_FILE);
         props.add(CERT_PASSWORD);
         properties = Collections.unmodifiableList(props);
@@ -144,19 +134,20 @@ public class APNSConnectionControllerService extends AbstractControllerService i
 	@Override
 	public ApnsClient getConnection() throws ProcessException {
         try {
-            apnsClient = new ApnsClientBuilder()
-                    .setClientCredentials(new File(cert_file), cert_password)
-                    .setApnsServer(hostname, 443)
-                    .build();
-
-            return apnsClient;
+        	if (apnsClient == null) {
+	            apnsClient = new ApnsClientBuilder()
+	                    .setClientCredentials(new File(cert_file), cert_password)
+	                    .setApnsServer(hostname, 443)
+	                    .build();
+        	}
 
         }
         catch (Exception e) {
         	log.error("Error: " + e.getMessage());
         	e.printStackTrace();
-        	return null;
         }
+        
+        return apnsClient;
 	}
 
 }
